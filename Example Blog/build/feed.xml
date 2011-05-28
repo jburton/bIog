@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Example Blog</title>
+  <id>http://blog.swinsian.com</id>
+  <updated>2011-05-27T23:00:00Z</updated>
+
+	
+	  <entry>
+	    <title>Another post</title>
+	    <link href="http://bog.example.com/2011/5/28/another-post" rel="alternate"/>
+	    <id>http://bog.example.com/2011/5/28/another-post</id>
+	    <published>2011-05-27T23:00:00Z</published>
+	    <updated>2011-05-27T23:00:00Z</updated>
+	    <summary type="html">&lt;p&gt;Here is &lt;em&gt;another&lt;/em&gt; post.&lt;/p&gt;
+
+&lt;h1&gt;Heading&lt;/h1&gt;
+
+&lt;p&gt;Fancy stuff: x&lt;sup&gt;2&lt;/sup&gt;&lt;/p&gt;
+</summary>
+	    <content type="html">&lt;p&gt;Here is &lt;em&gt;another&lt;/em&gt; post.&lt;/p&gt;
+
+&lt;h1&gt;Heading&lt;/h1&gt;
+
+&lt;p&gt;Fancy stuff: x&lt;sup&gt;2&lt;/sup&gt;&lt;/p&gt;
+</content>
+	  </entry>
+	
+	  <entry>
+	    <title>This is a blog post</title>
+	    <link href="http://bog.example.com/2011/5/26/blog-post" rel="alternate"/>
+	    <id>http://bog.example.com/2011/5/26/blog-post</id>
+	    <published>2011-05-25T23:00:00Z</published>
+	    <updated>2011-05-25T23:00:00Z</updated>
+	    <summary type="html">&lt;p&gt;This is a blog post. Markdown formatting is available.&lt;/p&gt;
+
+&lt;h1&gt;Features&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Makes a blog out of your text files&lt;/li&gt;
+&lt;li&gt;Thats it.&lt;/li&gt;
+&lt;/ul&gt;
+
+</summary>
+	    <content type="html">&lt;p&gt;This is a blog post. Markdown formatting is available.&lt;/p&gt;
+
+&lt;h1&gt;Features&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Makes a blog out of your text files&lt;/li&gt;
+&lt;li&gt;Thats it.&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+	  </entry>
+	
+	
+</feed>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>#{Description blogName}</title>
+  <id>http://blog.swinsian.com</id>
+  <updated>#{articles first date clone convertToUTC asString("%Y-%m-%dT%H:%M:%SZ")}</updated>
+
+	<!-- loop articles !-->
+	  <entry>
+	    <title>#{entry title}</title>
+	    <link href="#{Description baseURL cloneAppendPath(entry url)}" rel="alternate"/>
+	    <id>#{Description baseURL cloneAppendPath(entry url)}</id>
+	    <published>#{entry date clone convertToUTC asString("%Y-%m-%dT%H:%M:%SZ")}</published>
+	    <updated>#{entry date clone convertToUTC asString("%Y-%m-%dT%H:%M:%SZ")}</updated>
+	    <summary type="html">#{entry body htmlEscape}</summary>
+	    <content type="html">#{entry body htmlEscape}</content>
+	  </entry>
+	<!-- endloop articles !-->
+	
+</feed>

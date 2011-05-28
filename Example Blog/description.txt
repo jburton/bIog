@@ -1,0 +1,3 @@
+blogName: Example Blog
+description: An Example Blog
+baseURL: http://bog.example.com

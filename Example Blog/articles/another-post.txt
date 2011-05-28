@@ -1,0 +1,8 @@
+title: Another post
+date: 2011/05/28
+
+Here is *another* post.
+
+# Heading #
+
+Fancy stuff: x^2

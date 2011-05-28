@@ -1,0 +1,17 @@
+<section id="articles">
+	<!-- loop articles !-->
+    <article class="post">
+      <header>
+        <h1><a href="#{entry url}">#{entry title}</a></h1>
+        <span class="date">#{entry date asString("%B %d %Y")}</span>
+      </header>
+
+      <section class="content">
+		#{entry body}
+      </section>
+      <div class="more"><a href="#{entry url}">read more &raquo;</a></div>
+    </article>
+	<!-- endloop articles !-->
+</section>
+
+

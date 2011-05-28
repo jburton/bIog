@@ -1,0 +1,10 @@
+title: This is a blog post
+date: 2011/05/26
+description: First post on Example Blog
+
+This is a blog post. Markdown formatting is available.
+
+# Features #
+
+* Makes a blog out of your text files
+* Thats it.

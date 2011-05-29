@@ -1,0 +1,4 @@
+title: About
+description: About Example Blog
+
+This is the about page.

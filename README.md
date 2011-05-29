@@ -17,6 +17,3 @@ Inspired by Toto, but generates static pages instead and is written in the langu
 
 See the example templates for the layout and examples of syntax, which is also described a the top of the `bIog.io` file. Run it inside the source directory, or like so: `biog /path/to/sourcedir`. Results are generated in the `build` directory.
 
-### Todo
-
-* Ability to generate other static pages with the layout template.

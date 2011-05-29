@@ -23,6 +23,10 @@
 		description:  
 		
 		followed my markdown formatted content of post
+		
+	- pages/
+		* static pages in markdown format. filenames are used to determine URLs
+		e.g. about.txt will generate "build/about/index.html"
 	
 	- templates/
 		- layout.html
@@ -252,6 +256,43 @@ Feed := Object clone do(
 	)
 )
 
+StaticPage := Article clone do(
+	build := method(
+		self url := slug 
+		lp := sourceDir cloneAppendPath("build") cloneAppendPath(url)
+		Directory with(lp) createIfAbsent
+		self localPath := lp cloneAppendPath("index.html")
+		self contents := body
+		self
+	)
+)
+
+convertMarkdownFile := method(f, type, collect,
+	slug := f baseName
+	con := f contents
+	infoMap := Map clone
+	infolines := con beforeSeq("\n\n") split("\n")
+	infolines foreach(l,
+		key := l beforeSeq(":")
+		infoMap atPut(key, l afterSeq(":") lstrip)
+	)
+	
+	date := if (infoMap at("date"), 
+		Date clone fromString(infoMap at("date"), "%Y/%m/%d %H:%m"),
+		Date clone now
+	)
+	con = con afterSeq("\n\n")
+	
+	tempMDPath := sourceDir cloneAppendPath("working") cloneAppendPath(slug .. ".markdown")
+	tempPath := sourceDir cloneAppendPath("working") cloneAppendPath(slug)
+	
+	File with(tempMDPath) remove open write(con) close
+	Markdown parse(tempMDPath, tempPath)
+	body := File with(tempPath) contents
+	summary := body split("\n") first
+	collect append(type with(infoMap at("title"), body, summary, date, slug, infoMap at("description")))
+)
+
 
 // ========================================================================
 
@@ -264,34 +305,7 @@ Directory with(sourceDir cloneAppendPath("build")) createIfAbsent empty
 // get the articles
 articles := list clone
 articleDir := Directory with(sourceDir cloneAppendPath("articles"))
-articleFiles := articleDir files
-articleFiles foreach(f,
-	slug := f baseName
-	con := f contents
-	infoMap := Map clone
-	infolines := con beforeSeq("\n\n") split("\n")
-	infolines foreach(l,
-		key := l beforeSeq(":")
-		infoMap atPut(key, l afterSeq(":") lstrip)
-	)
-	
-	if (infoMap at("date") not, continue)
-	date := Date clone fromString(infoMap at("date"), "%Y/%m/%d %H:%m")
-	
-	con = con afterSeq("\n\n")
-	
-	tempMDPath := sourceDir cloneAppendPath("working") cloneAppendPath(slug .. ".markdown")
-	tempPath := sourceDir cloneAppendPath("working") cloneAppendPath(slug)
-	
-	File with(tempMDPath) remove open write(con) close
-	
-	Markdown parse(tempMDPath, tempPath)
-	body := File with(tempPath) contents
-	
-	summary := body split("\n") first
-	
-	articles append(Article with(infoMap at("title"), body, summary, date, slug, infoMap at("description")))
-)
+articleDir files foreach(f, convertMarkdownFile(f, Article, articles))
 
 "Generating pages for #{articles size asString} articles..." interpolate println
 
@@ -301,10 +315,16 @@ articles sortInPlaceBy(block(a, b, (a date) > (b date)))
 // generate full article pages 
 articles foreach(article, Page with(article) build)
 
+// find and build any static pages
+pages := list clone
+pagesDir := Directory with(sourceDir cloneAppendPath("pages"))
+pagesDir files foreach(f, convertMarkdownFile(f, StaticPage, pages))
+pages foreach(p, Page with(p build) build)
+
 "Generating archive pages..." println
 
 // makes the master archive
-masterArchive := Archive withArticles(articles, "archive/") build
+masterArchive := Archive withArticles(articles, "archive") build
 Page with(masterArchive) build
 
 // generate yearly and monthly archive pages
@@ -322,7 +342,7 @@ years foreach(y,
 	)
 )
 
-"Generating index page..." println
+"Generating index and feed pages..." println
 
 // create the index page. show the first 4 entries
 Index buildWithArticles(articles slice(0, 4))

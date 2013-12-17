@@ -303,7 +303,10 @@ convertMarkdownFile := method(f, type, collect,
 	)
 	
 	date := if (infoMap at("date"), 
-		Date clone fromString(infoMap at("date"), "%Y/%m/%d %H:%m"),
+		d := Date clone fromString(infoMap at("date"), "%Y/%m/%d %H:%m %Z")
+		// gross hack to keep dates backwards compatible with sites built under BST
+		d -= Duration fromNumber(if(d isDaylightSavingsTime, 1, 2) * 60 * 60)
+		d,
 		Date clone now
 	)
 	con = con afterSeq("\n\n")

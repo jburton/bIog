@@ -104,7 +104,13 @@ Directory empty := method(
 )
 
 Sequence htmlEscape := method(
-	self clone replaceMap(Map with("<", "&lt;", ">", "&gt;", "&", "&amp;"))
+	b := self clone 
+	b replaceMap(Map with("&", "&amp;"))
+	b replaceMap(Map with("<", "&lt;"))
+	b replaceMap(Map with(">", "&gt;"))
+	b
+)
+
 
 // ============================================================
 

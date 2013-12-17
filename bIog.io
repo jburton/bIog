@@ -244,7 +244,7 @@ Index := Object clone do(
 
 Archive := Index clone do(
 	url := "/archive"
-	title := Description blogName .. " Archive"
+	title := "Archive"
 	template := File with(sourceDir cloneAppendPath("templates/pages/archive.html")) contents
 	description := Description blogName .. " archive"
 	

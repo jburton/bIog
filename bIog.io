@@ -314,7 +314,7 @@ convertMarkdownFile := method(f, type, collect,
 	File with(tempMDPath) remove open write(con) close
 	Markdown parse(tempMDPath, tempPath)
 	body := File with(tempPath) contents
-	summary := body split("\n") first
+	summary := body split("\n") first appendSeq("\n")
 	collect append(type with(infoMap at("title"), body, summary, date, slug, infoMap at("description")))
 )
 

@@ -380,7 +380,10 @@ Feed build(articles slice(0, 10))
 staticDir := Directory with(sourceDir cloneAppendPath("static"))
 if (staticDir exists,
 	buildPath := sourceDir cloneAppendPath("build")
-	staticDir items foreach(i, i copyToPath(buildPath cloneAppendPath(i name)))
+	staticDir items println
+	staticDir items foreach(i, 
+		i copyAndProcessToPath(buildPath cloneAppendPath(i name))
+	)
 )
 
 // cleanup

@@ -182,9 +182,7 @@ Page := Object clone do(
 		page := self
 		body := template interpolate
 		
-		file := File with(localPath) remove open
-		file write(body)
-		file close
+		File with(localPath) remove open write(body) close
 	)
 )
 

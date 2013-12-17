@@ -79,10 +79,20 @@
 // =============================================================
 // extensions to base objects
 
-Directory copyToPath := method(targetPath,
+File copyAndProcessToPath := method(targetPath,
+	if (targetPath pathExtension == "css" and(Description csstidy == "true")) then(
+		CSSTidy tidyFile(path, targetPath)
+	) elseif(targetPath pathExtension == "js" and(Description jsmin == "true")) then(
+		JSMin minFile(path, targetPath)
+	) else(
+		copyToPath(targetPath)
+	)
+)
+
+Directory copyAndProcessToPath := method(targetPath,
 	if (list(".", "..") contains(targetPath lastPathComponent), return)
 	Directory with(targetPath) createIfAbsent
-	self items foreach(i, i copyToPath(targetPath cloneAppendPath(i name)))
+	self items foreach(i, i copyAndProcessToPath(targetPath cloneAppendPath(i name)))
 )
 
 Directory empty := method(
@@ -95,6 +105,23 @@ Directory empty := method(
 
 Sequence htmlEscape := method(
 	self clone replaceMap(Map with("<", "&lt;", ">", "&gt;", "&", "&amp;"))
+
+// ============================================================
+
+CSSTidy := Object clone do(
+	tidyFile := method(inPath, outPath,
+		//System runCommand("csstidy \"#{inPath}\" --preserve_css=true --template=highest \"#{outPath}\"" interpolate)
+		res := File with(inPath) contents
+		File with(outPath) remove open write(res) close
+	)
+)
+
+JSMin := Object clone do(
+	minFile := method(inPath, outPath,
+		res := File with(inPath) contents
+		//System runCommand("cat \"#{inPath}\" | jsmin" interpolate) stdout
+		File with(outPath) remove open write(res) close
+	)
 )
 
 // ============================================================
